@@ -1,0 +1,15 @@
+MoonEditorConfig
+Copyright 2026 Ma Yinuo
+
+This product is an independent implementation of the EditorConfig
+specification. Development uses the following projects as behavioral and design
+references; no upstream source code has been copied into the initial codebase.
+
+ec4j, Copyright (c) ec4j contributors, licensed under the Apache License 2.0:
+https://github.com/ec4j/ec4j
+
+EditorConfig Core Tests, Copyright (c) 2011-2018 EditorConfig Team, licensed
+under the 2-clause BSD license:
+https://github.com/editorconfig/editorconfig-core-test
+
+See docs/UPSTREAM.md for pinned revisions and the exact reuse policy.
