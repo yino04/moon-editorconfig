@@ -1,0 +1,248 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "yino04/moon-editorconfig/src/model"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn all_line_endings() -> Array[LineEnding]
+
+pub fn all_severities() -> Array[Severity]
+
+pub fn all_trace_actions() -> Array[TraceAction]
+
+pub fn default_limits() -> ResourceLimits
+
+pub fn default_parse_options() -> ParseOptions
+
+pub fn diagnostic(Severity, String, String, span? : SourceSpan, suggestion? : String) -> Diagnostic
+
+pub fn document(String, Array[Property], Array[Section], Array[Diagnostic], Bool, LineEnding) -> EditorConfigDocument
+
+pub fn effective_property(String, String, String, String, SourceSpan) -> EffectiveProperty
+
+pub fn empty_document(String) -> EditorConfigDocument
+
+pub fn empty_settings(String) -> EffectiveSettings
+
+pub fn error_diagnostic(String, String, span? : SourceSpan, suggestion? : String) -> Diagnostic
+
+pub fn property(String, String, String, String, SourceSpan, Int32) -> Property
+
+pub fn section(String, String, Array[Property], SourceSpan, Int32) -> Section
+
+pub fn source_origin() -> SourcePos
+
+pub fn source_pos(Int32, Int32, Int32) -> SourcePos
+
+pub fn source_span(String, SourcePos, SourcePos) -> SourceSpan
+
+pub fn strict_parse_options() -> ParseOptions
+
+pub fn trace_event(TraceAction, String, String, String, String, SourceSpan, String) -> TraceEvent
+
+pub fn unknown_span(String) -> SourceSpan
+
+pub fn warning_diagnostic(String, String, span? : SourceSpan, suggestion? : String) -> Diagnostic
+
+// Errors
+
+// Types and methods
+pub(all) struct Diagnostic {
+  severity : Severity
+  code : String
+  message : String
+  suggestion : String?
+  span : SourceSpan?
+} derive(Eq, @debug.Debug)
+pub fn Diagnostic::equal(Self, Self) -> Bool
+pub fn Diagnostic::is_error(Self) -> Bool
+pub fn Diagnostic::location_label(Self) -> String
+pub fn Diagnostic::not_equal(Self, Self) -> Bool
+pub fn Diagnostic::to_repr(Self) -> @debug.Repr
+
+pub(all) struct EditorConfigDocument {
+  source : String
+  preamble : Array[Property]
+  sections : Array[Section]
+  diagnostics : Array[Diagnostic]
+  has_bom : Bool
+  line_ending : LineEnding
+} derive(Eq, @debug.Debug)
+pub fn EditorConfigDocument::equal(Self, Self) -> Bool
+pub fn EditorConfigDocument::error_count(Self) -> Int32
+pub fn EditorConfigDocument::has_errors(Self) -> Bool
+pub fn EditorConfigDocument::not_equal(Self, Self) -> Bool
+pub fn EditorConfigDocument::property_count(Self) -> Int32
+pub fn EditorConfigDocument::root_value(Self) -> String?
+pub fn EditorConfigDocument::stops_search(Self) -> Bool
+pub fn EditorConfigDocument::to_repr(Self) -> @debug.Repr
+pub fn EditorConfigDocument::warning_count(Self) -> Int32
+
+pub(all) struct EffectiveProperty {
+  key : String
+  value : String
+  config_path : String
+  section_glob : String
+  span : SourceSpan
+} derive(Eq, @debug.Debug)
+pub fn EffectiveProperty::equal(Self, Self) -> Bool
+pub fn EffectiveProperty::not_equal(Self, Self) -> Bool
+pub fn EffectiveProperty::to_repr(Self) -> @debug.Repr
+
+pub(all) struct EffectiveSettings {
+  target_path : String
+  properties : Array[EffectiveProperty]
+  diagnostics : Array[Diagnostic]
+  trace : Array[TraceEvent]
+} derive(Eq, @debug.Debug)
+pub fn EffectiveSettings::equal(Self, Self) -> Bool
+pub fn EffectiveSettings::get(Self, String) -> EffectiveProperty?
+pub fn EffectiveSettings::has_errors(Self) -> Bool
+pub fn EffectiveSettings::not_equal(Self, Self) -> Bool
+pub fn EffectiveSettings::to_repr(Self) -> @debug.Repr
+pub fn EffectiveSettings::value(Self, String) -> String?
+
+pub(all) enum LineEnding {
+  None
+  Lf
+  CrLf
+  Mixed
+} derive(Eq, @debug.Debug)
+pub fn LineEnding::equal(Self, Self) -> Bool
+pub fn LineEnding::label(Self) -> String
+pub fn LineEnding::not_equal(Self, Self) -> Bool
+pub fn LineEnding::to_repr(Self) -> @debug.Repr
+
+pub(all) enum ParseMode {
+  Recover
+  Strict
+} derive(Eq, @debug.Debug)
+pub fn ParseMode::equal(Self, Self) -> Bool
+pub fn ParseMode::not_equal(Self, Self) -> Bool
+pub fn ParseMode::to_repr(Self) -> @debug.Repr
+
+pub(all) struct ParseOptions {
+  mode : ParseMode
+  spec : SpecVersion
+  limits : ResourceLimits
+  accept_bom : Bool
+} derive(Eq, @debug.Debug)
+pub fn ParseOptions::equal(Self, Self) -> Bool
+pub fn ParseOptions::not_equal(Self, Self) -> Bool
+pub fn ParseOptions::to_repr(Self) -> @debug.Repr
+
+pub(all) struct Property {
+  raw_key : String
+  key : String
+  raw_value : String
+  value : String
+  span : SourceSpan
+  ordinal : Int32
+} derive(Eq, @debug.Debug)
+pub fn Property::equal(Self, Self) -> Bool
+pub fn Property::is_root(Self) -> Bool
+pub fn Property::is_unset(Self) -> Bool
+pub fn Property::not_equal(Self, Self) -> Bool
+pub fn Property::to_repr(Self) -> @debug.Repr
+
+pub(all) struct ResourceLimits {
+  max_key_length : Int32
+  max_value_length : Int32
+  max_glob_length : Int32
+  max_document_length : Int32
+  max_sections : Int32
+  max_properties : Int32
+  max_diagnostics : Int32
+  max_glob_nesting : Int32
+  max_alternatives : Int32
+  max_range_cardinality : Int32
+  max_match_operations : Int32
+} derive(Eq, @debug.Debug)
+pub fn ResourceLimits::equal(Self, Self) -> Bool
+pub fn ResourceLimits::is_valid(Self) -> Bool
+pub fn ResourceLimits::not_equal(Self, Self) -> Bool
+pub fn ResourceLimits::to_repr(Self) -> @debug.Repr
+
+pub(all) struct Section {
+  raw_glob : String
+  glob : String
+  properties : Array[Property]
+  span : SourceSpan
+  ordinal : Int32
+} derive(Eq, @debug.Debug)
+pub fn Section::equal(Self, Self) -> Bool
+pub fn Section::has_property(Self, String) -> Bool
+pub fn Section::last_property(Self, String) -> Property?
+pub fn Section::not_equal(Self, Self) -> Bool
+pub fn Section::to_repr(Self) -> @debug.Repr
+
+pub(all) enum Severity {
+  Info
+  Warning
+  Error
+} derive(Eq, @debug.Debug)
+pub fn Severity::equal(Self, Self) -> Bool
+pub fn Severity::label(Self) -> String
+pub fn Severity::not_equal(Self, Self) -> Bool
+pub fn Severity::to_repr(Self) -> @debug.Repr
+
+pub(all) struct SourcePos {
+  offset : Int32
+  line : Int32
+  column : Int32
+} derive(Eq, @debug.Debug)
+pub fn SourcePos::equal(Self, Self) -> Bool
+pub fn SourcePos::next_column(Self, width? : Int32) -> Self
+pub fn SourcePos::next_line(Self, width? : Int32) -> Self
+pub fn SourcePos::not_equal(Self, Self) -> Bool
+pub fn SourcePos::to_repr(Self) -> @debug.Repr
+
+pub(all) struct SourceSpan {
+  source : String
+  start : SourcePos
+  end : SourcePos
+} derive(Eq, @debug.Debug)
+pub fn SourceSpan::contains_offset(Self, Int32) -> Bool
+pub fn SourceSpan::equal(Self, Self) -> Bool
+pub fn SourceSpan::is_empty(Self) -> Bool
+pub fn SourceSpan::merge(Self, Self) -> Self
+pub fn SourceSpan::not_equal(Self, Self) -> Bool
+pub fn SourceSpan::to_repr(Self) -> @debug.Repr
+
+pub(all) enum SpecVersion {
+  V0_17_2
+} derive(Eq, @debug.Debug)
+pub fn SpecVersion::equal(Self, Self) -> Bool
+pub fn SpecVersion::not_equal(Self, Self) -> Bool
+pub fn SpecVersion::to_repr(Self) -> @debug.Repr
+pub fn SpecVersion::to_string(Self) -> String
+
+pub(all) enum TraceAction {
+  Assign
+  Override
+  Unset
+  Ignore
+} derive(Eq, @debug.Debug)
+pub fn TraceAction::equal(Self, Self) -> Bool
+pub fn TraceAction::label(Self) -> String
+pub fn TraceAction::not_equal(Self, Self) -> Bool
+pub fn TraceAction::to_repr(Self) -> @debug.Repr
+
+pub(all) struct TraceEvent {
+  action : TraceAction
+  key : String
+  value : String
+  config_path : String
+  section_glob : String
+  span : SourceSpan
+  note : String
+} derive(Eq, @debug.Debug)
+pub fn TraceEvent::equal(Self, Self) -> Bool
+pub fn TraceEvent::not_equal(Self, Self) -> Bool
+pub fn TraceEvent::to_repr(Self) -> @debug.Repr
+
+// Type aliases
+
+// Traits
