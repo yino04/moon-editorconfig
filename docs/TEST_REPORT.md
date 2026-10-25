@@ -30,6 +30,7 @@ The CI baseline pins compiler/core release `0.10.17+d971670cd`; its installed
 
 ```sh
 moon version --all
+moon update
 moon check --target js --deny-warn
 moon test --target js --deny-warn
 moon check --target wasm-gc --deny-warn
@@ -51,9 +52,10 @@ if ($dirty) { throw "uncommitted or untracked generated files remain: $dirty" }
 ```
 
 In this toolchain, `moon install` installs a binary package globally; it is not
-the dependency-restoration command used by older workflow sketches. The first
-`moon check` synchronizes declared module dependencies. Do not add
-`moon install` to CI as a no-argument substitute for dependency resolution.
+the dependency-restoration command used by older workflow sketches. A fresh CI
+runner must use `moon update` to populate its registry index before `moon
+check` resolves the pinned `moonbitlang/async` dependency. Do not add `moon
+install` to CI as a no-argument substitute for dependency resolution.
 
 To inspect the number of executable MoonBit tests without inflating the count
 with files or snapshots, run:

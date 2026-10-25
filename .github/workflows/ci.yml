@@ -33,6 +33,9 @@ jobs:
       - name: Show toolchain versions
         run: moon version --all
 
+      - name: Update MoonBit registry index
+        run: moon update
+
       - name: Check JavaScript backend
         run: moon check --target js --deny-warn
 
@@ -72,6 +75,9 @@ jobs:
           version: 0.10.17+d971670cd
           setup-core: true
           core-version: 0.10.17+d971670cd
+
+      - name: Update MoonBit registry index
+        run: moon update
 
       - name: Build native command
         run: moon build --target native --deny-warn cmd/moonecfg
