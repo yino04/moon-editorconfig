@@ -1,0 +1,4 @@
+root = true
+
+[*.mbt
+indent_size = not-a-number

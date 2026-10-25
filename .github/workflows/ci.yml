@@ -1,0 +1,178 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  core:
+    name: Core library (JS and wasm-gc)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up MoonBit 0.10.17 toolchain
+        uses: hustcer/setup-moonbit@87e2bdf5cf20d3b6f5c5f266a8a513f503bb5b76
+        with:
+          version: 0.10.17+d971670cd
+          setup-core: true
+          core-version: 0.10.17+d971670cd
+
+      - name: Show toolchain versions
+        run: moon version --all
+
+      - name: Check JavaScript backend
+        run: moon check --target js --deny-warn
+
+      - name: Test JavaScript backend
+        run: moon test --target js --deny-warn
+
+      - name: Check wasm-gc backend
+        run: moon check --target wasm-gc --deny-warn
+
+      - name: Test wasm-gc backend
+        run: moon test --target wasm-gc --deny-warn
+
+      - name: Verify formatting
+        run: moon fmt --check
+
+      - name: Regenerate and compare public interfaces
+        run: |
+          moon info --target all
+          git diff --exit-code
+          test -z "$(git status --porcelain --untracked-files=all)"
+
+  cli-e2e:
+    name: Native CLI end-to-end
+    needs: core
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up MoonBit 0.10.17 toolchain
+        uses: hustcer/setup-moonbit@87e2bdf5cf20d3b6f5c5f266a8a513f503bb5b76
+        with:
+          version: 0.10.17+d971670cd
+          setup-core: true
+          core-version: 0.10.17+d971670cd
+
+      - name: Build native command
+        run: moon build --target native --deny-warn cmd/moonecfg
+
+      - name: Resolve files from a temporary disk tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          fixture="$(mktemp -d)"
+          trap 'rm -rf "$fixture"' EXIT
+          cp -R examples/basic "$fixture/basic"
+          cp -R examples/nested "$fixture/nested"
+
+          moon run --target native --deny-warn cmd/moonecfg -- \
+            resolve "$fixture/basic/src/main.mbt" --json \
+            > "$RUNNER_TEMP/basic-resolve.json"
+          moon run --target native --deny-warn cmd/moonecfg -- \
+            resolve "$fixture/basic/src/main.mbt" --json \
+            > "$RUNNER_TEMP/basic-resolve-repeat.json"
+          moon run --target native --deny-warn cmd/moonecfg -- \
+            explain "$fixture/nested/src/deep/main.mbt" --json \
+            > "$RUNNER_TEMP/nested-explain.json"
+          moon run --target native --deny-warn cmd/moonecfg -- \
+            explain "$fixture/nested/src/deep/main.mbt" --json \
+            > "$RUNNER_TEMP/nested-explain-repeat.json"
+          moon run --target native --deny-warn cmd/moonecfg -- \
+            parse "$fixture/basic/.editorconfig" --json \
+            > "$RUNNER_TEMP/basic-parse.json"
+          moon run --target native --deny-warn cmd/moonecfg -- \
+            parse "$fixture/basic/.editorconfig" --json \
+            > "$RUNNER_TEMP/basic-parse-repeat.json"
+
+          cmp "$RUNNER_TEMP/basic-resolve.json" \
+            "$RUNNER_TEMP/basic-resolve-repeat.json"
+          cmp "$RUNNER_TEMP/nested-explain.json" \
+            "$RUNNER_TEMP/nested-explain-repeat.json"
+          cmp "$RUNNER_TEMP/basic-parse.json" \
+            "$RUNNER_TEMP/basic-parse-repeat.json"
+
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          temp = Path(os.environ["RUNNER_TEMP"])
+          basic = json.loads((temp / "basic-resolve.json").read_text())
+          nested = json.loads((temp / "nested-explain.json").read_text())
+          basic_text = json.dumps(basic, sort_keys=True)
+          nested_text = json.dumps(nested, sort_keys=True)
+          assert "indent_size" in basic_text and "2" in basic_text
+          assert "custom_key" in basic_text and "value" in basic_text
+          assert "indent_size" in nested_text and "4" in nested_text
+          assert "end_of_line" in nested_text and "unset" in nested_text
+          PY
+
+      - name: Match required glob examples
+        shell: bash
+        run: |
+          set -euo pipefail
+          while IFS=$'\t' read -r pattern path expected; do
+            if [[ -z "$pattern" || "$pattern" == \#* ]]; then
+              continue
+            fi
+            actual="$(
+              moon run --target native --deny-warn cmd/moonecfg -- \
+                match "$pattern" "$path"
+            )"
+            test "$actual" = "$expected"
+          done < examples/glob-cases.tsv
+
+      - name: Reject an invalid configuration with exit code 3
+        shell: bash
+        run: |
+          set -euo pipefail
+          fixture="$(mktemp -d)"
+          trap 'rm -rf "$fixture"' EXIT
+          cp examples/basic/invalid.editorconfig "$fixture/invalid.editorconfig"
+
+          set +e
+          moon run --target native --deny-warn cmd/moonecfg -- \
+            validate "$fixture/invalid.editorconfig" --strict --json \
+            > "$RUNNER_TEMP/invalid.json" \
+            2> "$RUNNER_TEMP/invalid.stderr"
+          status=$?
+          set -e
+
+          test "$status" -eq 3
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          report = json.loads(
+              (Path(os.environ["RUNNER_TEMP"]) / "invalid.json").read_text()
+          )
+          text = json.dumps(report, sort_keys=True)
+          assert "diagnostic" in text.lower()
+          assert "line" in text.lower()
+          PY
+
+      - name: Ensure generated files remain committed
+        run: |
+          git diff --exit-code
+          test -z "$(git status --porcelain --untracked-files=all)"

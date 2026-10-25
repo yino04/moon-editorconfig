@@ -1,0 +1,6 @@
+# config_path	target_path	case_mode	expected_indent_size
+C:\workspace\project\.editorconfig	C:\workspace\project\src\main.mbt	insensitive	2
+C:\workspace\project\.editorconfig	C:\workspace\project\src\deep\main.mbt	insensitive	4
+c:\WORKSPACE\project\.editorconfig	C:\workspace\project\src\deep\main.mbt	insensitive	4
+C:\workspace\project\.editorconfig	D:\workspace\project\src\main.mbt	insensitive	outside-root
+\\server\share\project\.editorconfig	\\server\share\project\src\main.mbt	insensitive	2

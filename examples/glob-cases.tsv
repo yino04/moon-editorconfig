@@ -1,0 +1,10 @@
+# pattern	path	expected
+*.{mbt,md}	main.mbt	true
+*.{mbt,md}	README.md	true
+*.{mbt,md}	main.rs	false
+foo{1..3}.txt	foo1.txt	true
+foo{1..3}.txt	foo3.txt	true
+foo{1..3}.txt	foo4.txt	false
+src/*.mbt	src/main.mbt	true
+src/*.mbt	src/deep/test.mbt	false
+src/**/*.mbt	src/deep/test.mbt	true

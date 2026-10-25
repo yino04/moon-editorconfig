@@ -1,0 +1,7 @@
+root = true
+
+[*.mbt]
+indent_size = 2
+
+[src/**/*.mbt]
+indent_size = 4
