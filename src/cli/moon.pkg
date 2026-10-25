@@ -1,0 +1,14 @@
+import {
+  "yino04/moon-editorconfig/src/model",
+  "yino04/moon-editorconfig/src/parser",
+  "yino04/moon-editorconfig/src/glob",
+  "yino04/moon-editorconfig/src/properties",
+  "yino04/moon-editorconfig/src/resolver",
+  "yino04/moon-editorconfig/src/report",
+  "moonbitlang/core/debug",
+  "moonbitlang/core/json",
+}
+
+import {
+  "yino04/moon-editorconfig/src/path",
+} for "test"

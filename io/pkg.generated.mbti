@@ -1,0 +1,44 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "yino04/moon-editorconfig/io"
+
+import {
+  "moonbitlang/core/debug",
+  "yino04/moon-editorconfig/src/model",
+  "yino04/moon-editorconfig/src/resolver",
+}
+
+// Values
+pub fn host_error(String, String, String) -> HostError
+
+pub async fn load_config_source(String, config_name? : String) -> ConfigLoadResult
+
+pub async fn read_bytes(String) -> Result[Bytes, HostError]
+
+pub async fn read_utf8(String) -> Result[String, (@model.Diagnostic, HostError?)]
+
+// Errors
+
+// Types and methods
+pub(all) struct ConfigLoadResult {
+  source : @resolver.MemoryConfigSource
+  diagnostics : Array[@model.Diagnostic]
+  errors : Array[HostError]
+  discovered_paths : Array[String]
+} derive(Eq, @debug.Debug)
+pub fn ConfigLoadResult::equal(Self, Self) -> Bool
+pub fn ConfigLoadResult::not_equal(Self, Self) -> Bool
+pub fn ConfigLoadResult::to_repr(Self) -> @debug.Repr
+
+pub(all) struct HostError {
+  operation : String
+  path : String
+  message : String
+} derive(Eq, @debug.Debug)
+pub fn HostError::equal(Self, Self) -> Bool
+pub fn HostError::not_equal(Self, Self) -> Bool
+pub fn HostError::render(Self) -> String
+pub fn HostError::to_repr(Self) -> @debug.Repr
+
+// Type aliases
+
+// Traits

@@ -1,0 +1,15 @@
+import {
+  "yino04/moon-editorconfig/src/model",
+  "yino04/moon-editorconfig/src/lexer",
+  "yino04/moon-editorconfig/src/parser",
+  "yino04/moon-editorconfig/src/path",
+  "yino04/moon-editorconfig/src/resolver",
+  "moonbitlang/async/fs",
+  "moonbitlang/core/debug",
+}
+
+supported_targets = "native+wasm"
+
+import {
+  "moonbitlang/async",
+} for "test"

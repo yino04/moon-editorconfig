@@ -1,0 +1,79 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "yino04/moon-editorconfig/src/cli"
+
+import {
+  "moonbitlang/core/debug",
+  "yino04/moon-editorconfig/src/model",
+  "yino04/moon-editorconfig/src/resolver",
+}
+
+// Values
+pub fn diagnostics_response(Array[@model.Diagnostic], Bool) -> CliResponse
+
+pub fn exit_invalid_config() -> Int32
+
+pub fn exit_io() -> Int32
+
+pub fn exit_resource_limit() -> Int32
+
+pub fn exit_success() -> Int32
+
+pub fn exit_usage() -> Int32
+
+pub fn help_response() -> CliResponse
+
+pub fn help_text() -> String
+
+pub fn io_error_response(String, String, Bool) -> CliResponse
+
+pub fn match_response(String, String, Bool) -> CliResponse
+
+pub fn parse_arguments(Array[String]) -> Result[CliCommand, CliUsageError]
+
+pub fn parse_response(String, String, Bool) -> CliResponse
+
+pub fn resolve_response(@resolver.ResolveResult, Bool, Bool) -> CliResponse
+
+pub fn usage_response(CliUsageError) -> CliResponse
+
+pub fn validate_response(String, String, Bool, Bool) -> CliResponse
+
+pub fn version_response() -> CliResponse
+
+pub fn version_text() -> String
+
+// Errors
+
+// Types and methods
+pub(all) enum CliCommand {
+  Help
+  Version
+  Parse(String, Bool)
+  Match(String, String, Bool)
+  Resolve(String, Bool)
+  Explain(String, Bool)
+  Validate(String, Bool, Bool)
+} derive(Eq, @debug.Debug)
+pub fn CliCommand::equal(Self, Self) -> Bool
+pub fn CliCommand::not_equal(Self, Self) -> Bool
+pub fn CliCommand::to_repr(Self) -> @debug.Repr
+
+pub(all) struct CliResponse {
+  stdout : String
+  stderr : String
+  exit_code : Int32
+} derive(Eq, @debug.Debug)
+pub fn CliResponse::equal(Self, Self) -> Bool
+pub fn CliResponse::not_equal(Self, Self) -> Bool
+pub fn CliResponse::to_repr(Self) -> @debug.Repr
+
+pub(all) struct CliUsageError {
+  message : String
+} derive(Eq, @debug.Debug)
+pub fn CliUsageError::equal(Self, Self) -> Bool
+pub fn CliUsageError::not_equal(Self, Self) -> Bool
+pub fn CliUsageError::to_repr(Self) -> @debug.Repr
+
+// Type aliases
+
+// Traits

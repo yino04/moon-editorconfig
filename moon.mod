@@ -24,3 +24,7 @@ keywords = [ "editorconfig", "parser", "glob", "configuration" ]
 preferred_target = "native"
 
 description = "EditorConfig core parser, bounded glob matcher, and configuration resolver"
+
+import {
+  "moonbitlang/async@0.22.5",
+}
