@@ -1,0 +1,103 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "yino04/moon-editorconfig/src/glob"
+
+import {
+  "moonbitlang/core/debug",
+  "yino04/moon-editorconfig/src/model",
+}
+
+// Values
+pub fn compile_glob(String, limits? : @model.ResourceLimits) -> GlobCompileResult
+
+pub fn glob_matches(CompiledGlob, String) -> Bool
+
+pub fn match_glob(CompiledGlob, String) -> GlobMatchResult
+
+pub fn matches(String, String, limits? : @model.ResourceLimits) -> Bool
+
+// Errors
+
+// Types and methods
+pub(all) struct CharacterClass {
+  negated : Bool
+  items : Array[ClassItem]
+} derive(Eq, @debug.Debug)
+pub fn CharacterClass::equal(Self, Self) -> Bool
+pub fn CharacterClass::not_equal(Self, Self) -> Bool
+pub fn CharacterClass::to_repr(Self) -> @debug.Repr
+
+pub(all) enum ClassItem {
+  ClassLiteral(Char)
+  ClassRange(Char, Char)
+} derive(Eq, @debug.Debug)
+pub fn ClassItem::equal(Self, Self) -> Bool
+pub fn ClassItem::not_equal(Self, Self) -> Bool
+pub fn ClassItem::to_repr(Self) -> @debug.Repr
+
+pub(all) struct CompiledGlob {
+  pattern : String
+  ast : GlobSequence
+  anchored : Bool
+  never_matches_file : Bool
+  alternative_count : Int32
+  range_cardinality : Int32
+  limits : @model.ResourceLimits
+} derive(Eq, @debug.Debug)
+pub fn CompiledGlob::equal(Self, Self) -> Bool
+pub fn CompiledGlob::not_equal(Self, Self) -> Bool
+pub fn CompiledGlob::to_repr(Self) -> @debug.Repr
+
+pub(all) enum GlobAtom {
+  Literal(Char)
+  Separator
+  Star
+  GlobStar
+  RecursiveDirectories
+  Question
+  Class(CharacterClass)
+  Choice(Array[GlobSequence])
+  NumberRange(IntegerRange)
+} derive(Eq, @debug.Debug)
+pub fn GlobAtom::equal(Self, Self) -> Bool
+pub fn GlobAtom::not_equal(Self, Self) -> Bool
+pub fn GlobAtom::to_repr(Self) -> @debug.Repr
+
+pub(all) struct GlobCompileResult {
+  glob : CompiledGlob?
+  diagnostics : Array[@model.Diagnostic]
+} derive(Eq, @debug.Debug)
+pub fn GlobCompileResult::equal(Self, Self) -> Bool
+pub fn GlobCompileResult::is_ok(Self) -> Bool
+pub fn GlobCompileResult::not_equal(Self, Self) -> Bool
+pub fn GlobCompileResult::to_repr(Self) -> @debug.Repr
+
+pub(all) struct GlobMatchResult {
+  matched : Bool
+  operations : Int32
+  exhausted : Bool
+  diagnostics : Array[@model.Diagnostic]
+} derive(Eq, @debug.Debug)
+pub fn GlobMatchResult::completed(Self) -> Bool
+pub fn GlobMatchResult::equal(Self, Self) -> Bool
+pub fn GlobMatchResult::not_equal(Self, Self) -> Bool
+pub fn GlobMatchResult::to_repr(Self) -> @debug.Repr
+
+pub(all) struct GlobSequence {
+  atoms : Array[GlobAtom]
+} derive(Eq, @debug.Debug)
+pub fn GlobSequence::equal(Self, Self) -> Bool
+pub fn GlobSequence::not_equal(Self, Self) -> Bool
+pub fn GlobSequence::to_repr(Self) -> @debug.Repr
+
+pub(all) struct IntegerRange {
+  first : Int32
+  last : Int32
+  cardinality : Int32
+} derive(Eq, @debug.Debug)
+pub fn IntegerRange::equal(Self, Self) -> Bool
+pub fn IntegerRange::not_equal(Self, Self) -> Bool
+pub fn IntegerRange::to_repr(Self) -> @debug.Repr
+
+// Type aliases
+
+// Traits
