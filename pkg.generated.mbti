@@ -1,7 +1,37 @@
 // Generated using `moon info`, DON'T EDIT IT
 package "yino04/moon-editorconfig"
 
+import {
+  "yino04/moon-editorconfig/src/glob",
+  "yino04/moon-editorconfig/src/model",
+  "yino04/moon-editorconfig/src/path",
+  "yino04/moon-editorconfig/src/resolver",
+}
+
 // Values
+pub fn compile_glob(String, limits? : @model.ResourceLimits) -> @glob.GlobCompileResult
+
+pub fn config_file(String, String) -> @resolver.ConfigFile
+
+pub fn document_json(@model.EditorConfigDocument) -> String
+
+pub fn explain(String, @resolver.MemoryConfigSource, case_sensitivity? : @path.CaseSensitivity) -> @resolver.ResolveResult
+
+pub fn glob_matches(@glob.CompiledGlob, String) -> Bool
+
+pub fn matches(String, String, limits? : @model.ResourceLimits) -> Bool
+
+pub fn memory_source(Array[@resolver.ConfigFile]) -> @resolver.MemoryConfigSource
+
+pub fn parse(String, source? : String, options? : @model.ParseOptions) -> @model.EditorConfigDocument
+
+pub fn parse_checked(String, source? : String, options? : @model.ParseOptions) -> Result[@model.EditorConfigDocument, Array[@model.Diagnostic]]
+
+pub fn resolve(String, @resolver.MemoryConfigSource, case_sensitivity? : @path.CaseSensitivity) -> @resolver.ResolveResult
+
+pub fn settings_json(@model.EffectiveSettings) -> String
+
+pub fn validate(@model.EditorConfigDocument) -> Array[@model.Diagnostic]
 
 // Errors
 
