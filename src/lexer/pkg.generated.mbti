@@ -1,0 +1,64 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "yino04/moon-editorconfig/src/lexer"
+
+import {
+  "moonbitlang/core/debug",
+  "yino04/moon-editorconfig/src/model",
+}
+
+// Values
+pub fn decode_utf8(BytesView, source? : String) -> Result[String, @model.Diagnostic]
+
+pub fn lex(String, source? : String, limits? : @model.ResourceLimits, accept_bom? : Bool) -> LexResult
+
+pub fn lex_utf8(BytesView, source? : String, limits? : @model.ResourceLimits, accept_bom? : Bool) -> Result[LexResult, @model.Diagnostic]
+
+// Errors
+
+// Types and methods
+pub struct LexLine {
+  raw : String
+  text : String
+  kind : LexLineKind
+  span : @model.SourceSpan
+  content_span : @model.SourceSpan
+  number : Int32
+  ending : PhysicalLineEnding
+} derive(Eq, @debug.Debug)
+pub fn LexLine::equal(Self, Self) -> Bool
+pub fn LexLine::not_equal(Self, Self) -> Bool
+pub fn LexLine::to_repr(Self) -> @debug.Repr
+
+pub(all) enum LexLineKind {
+  BlankLine
+  CommentLine
+  ContentLine
+} derive(Eq, @debug.Debug)
+pub fn LexLineKind::equal(Self, Self) -> Bool
+pub fn LexLineKind::not_equal(Self, Self) -> Bool
+pub fn LexLineKind::to_repr(Self) -> @debug.Repr
+
+pub struct LexResult {
+  lines : Array[LexLine]
+  diagnostics : Array[@model.Diagnostic]
+  has_bom : Bool
+  line_ending : @model.LineEnding
+  truncated : Bool
+} derive(Eq, @debug.Debug)
+pub fn LexResult::equal(Self, Self) -> Bool
+pub fn LexResult::not_equal(Self, Self) -> Bool
+pub fn LexResult::to_repr(Self) -> @debug.Repr
+
+pub(all) enum PhysicalLineEnding {
+  NoEnding
+  LfEnding
+  CrLfEnding
+  BareCrEnding
+} derive(Eq, @debug.Debug)
+pub fn PhysicalLineEnding::equal(Self, Self) -> Bool
+pub fn PhysicalLineEnding::not_equal(Self, Self) -> Bool
+pub fn PhysicalLineEnding::to_repr(Self) -> @debug.Repr
+
+// Type aliases
+
+// Traits
