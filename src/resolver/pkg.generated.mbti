@@ -1,0 +1,74 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "yino04/moon-editorconfig/src/resolver"
+
+import {
+  "moonbitlang/core/debug",
+  "yino04/moon-editorconfig/src/model",
+  "yino04/moon-editorconfig/src/path",
+}
+
+// Values
+pub fn config_file(String, String) -> ConfigFile
+
+pub fn empty_memory_source() -> MemoryConfigSource
+
+pub fn explain(String, MemoryConfigSource, @path.CaseSensitivity) -> ResolveResult
+
+pub fn explain_with_options(String, MemoryConfigSource, ResolveOptions) -> ResolveResult
+
+pub fn memory_source(Array[ConfigFile]) -> MemoryConfigSource
+
+pub fn resolve(String, MemoryConfigSource, @path.CaseSensitivity) -> ResolveResult
+
+pub fn resolve_options(@path.CaseSensitivity, parse_options? : @model.ParseOptions, config_name? : String) -> ResolveOptions
+
+pub fn resolve_with_options(String, MemoryConfigSource, ResolveOptions) -> ResolveResult
+
+// Errors
+
+// Types and methods
+pub(all) struct ConfigFile {
+  path : String
+  text : String
+} derive(Eq, @debug.Debug)
+pub fn ConfigFile::equal(Self, Self) -> Bool
+pub fn ConfigFile::not_equal(Self, Self) -> Bool
+pub fn ConfigFile::to_repr(Self) -> @debug.Repr
+
+pub struct MemoryConfigSource {
+  files : Array[ConfigFile]
+} derive(Eq, @debug.Debug)
+pub fn MemoryConfigSource::equal(Self, Self) -> Bool
+pub fn MemoryConfigSource::file_count(Self) -> Int32
+pub fn MemoryConfigSource::lookup(Self, String, @path.CaseSensitivity) -> ConfigFile?
+pub fn MemoryConfigSource::not_equal(Self, Self) -> Bool
+pub fn MemoryConfigSource::paths(Self) -> Array[String]
+pub fn MemoryConfigSource::put(Self, String, String) -> Unit
+pub fn MemoryConfigSource::to_repr(Self) -> @debug.Repr
+
+pub(all) struct ResolveOptions {
+  case_sensitivity : @path.CaseSensitivity
+  parse_options : @model.ParseOptions
+  config_name : String
+} derive(Eq, @debug.Debug)
+pub fn ResolveOptions::equal(Self, Self) -> Bool
+pub fn ResolveOptions::not_equal(Self, Self) -> Bool
+pub fn ResolveOptions::to_repr(Self) -> @debug.Repr
+
+pub(all) struct ResolveResult {
+  settings : @model.EffectiveSettings
+  searched_config_paths : Array[String]
+  loaded_config_paths : Array[String]
+  stopped_by_root : String?
+  case_sensitivity : @path.CaseSensitivity
+} derive(Eq, @debug.Debug)
+pub fn ResolveResult::equal(Self, Self) -> Bool
+pub fn ResolveResult::get(Self, String) -> @model.EffectiveProperty?
+pub fn ResolveResult::has_errors(Self) -> Bool
+pub fn ResolveResult::not_equal(Self, Self) -> Bool
+pub fn ResolveResult::to_repr(Self) -> @debug.Repr
+pub fn ResolveResult::value(Self, String) -> String?
+
+// Type aliases
+
+// Traits
