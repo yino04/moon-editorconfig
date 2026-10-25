@@ -1,0 +1,59 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "yino04/moon-editorconfig/src/properties"
+
+import {
+  "moonbitlang/core/debug",
+  "yino04/moon-editorconfig/src/model",
+}
+
+// Values
+pub fn indentation_semantics(Array[@model.Property]) -> IndentationSemantics
+
+pub fn is_known_property(String) -> Bool
+
+pub fn known_property_names() -> Array[String]
+
+pub fn normalized_property(@model.Property, in_preamble? : Bool) -> @model.Property
+
+pub fn validate_document(@model.EditorConfigDocument) -> Array[@model.Diagnostic]
+
+pub fn validate_property(@model.Property, in_preamble? : Bool) -> PropertyValidation
+
+// Errors
+
+// Types and methods
+pub(all) struct IndentationSemantics {
+  indent_style : String?
+  indent_size : Int32?
+  tab_width : Int32?
+  indent_size_uses_tab : Bool
+  uses_editor_tab_width : Bool
+} derive(Eq, @debug.Debug)
+pub fn IndentationSemantics::equal(Self, Self) -> Bool
+pub fn IndentationSemantics::not_equal(Self, Self) -> Bool
+pub fn IndentationSemantics::to_repr(Self) -> @debug.Repr
+
+pub(all) struct PropertyValidation {
+  status : ValidationStatus
+  normalized_value : String
+  diagnostic : @model.Diagnostic?
+} derive(Eq, @debug.Debug)
+pub fn PropertyValidation::equal(Self, Self) -> Bool
+pub fn PropertyValidation::is_custom(Self) -> Bool
+pub fn PropertyValidation::is_valid(Self) -> Bool
+pub fn PropertyValidation::not_equal(Self, Self) -> Bool
+pub fn PropertyValidation::to_repr(Self) -> @debug.Repr
+
+pub(all) enum ValidationStatus {
+  Valid
+  Invalid
+  Unset
+  Custom
+} derive(Eq, @debug.Debug)
+pub fn ValidationStatus::equal(Self, Self) -> Bool
+pub fn ValidationStatus::not_equal(Self, Self) -> Bool
+pub fn ValidationStatus::to_repr(Self) -> @debug.Repr
+
+// Type aliases
+
+// Traits
