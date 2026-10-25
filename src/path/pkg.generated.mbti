@@ -1,0 +1,85 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "yino04/moon-editorconfig/src/path"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn ancestors(String) -> Array[String]
+
+pub fn basename(String) -> String
+
+pub fn config_candidates(String, config_name? : String) -> Array[String]
+
+pub fn config_search_directories(String) -> Array[String]
+
+pub fn dirname(String) -> String
+
+pub fn drive(String) -> String?
+
+pub fn is_absolute(String) -> Bool
+
+pub fn is_relative(String) -> Bool
+
+pub fn is_unc(String) -> Bool
+
+pub fn is_within(String, String, CaseSensitivity) -> Bool
+
+pub fn join(String, String) -> String
+
+pub fn join_many(Array[String]) -> String
+
+pub fn normalize(String) -> String
+
+pub fn parse(String) -> LexicalPath
+
+pub fn path_equal(String, String, CaseSensitivity) -> Bool
+
+pub fn path_kind(String) -> PathKind
+
+pub fn relative_to(String, String, CaseSensitivity) -> String?
+
+pub fn unc_server(String) -> String?
+
+pub fn unc_share(String) -> String?
+
+// Errors
+
+// Types and methods
+pub(all) enum CaseSensitivity {
+  CaseSensitive
+  AsciiCaseInsensitive
+} derive(Eq, @debug.Debug)
+pub fn CaseSensitivity::equal(Self, Self) -> Bool
+pub fn CaseSensitivity::not_equal(Self, Self) -> Bool
+pub fn CaseSensitivity::to_repr(Self) -> @debug.Repr
+
+pub struct LexicalPath {
+  kind : PathKind
+  components : Array[String]
+} derive(Eq, @debug.Debug)
+pub fn LexicalPath::equal(Self, Self) -> Bool
+pub fn LexicalPath::is_absolute(Self) -> Bool
+pub fn LexicalPath::is_relative(Self) -> Bool
+pub fn LexicalPath::not_equal(Self, Self) -> Bool
+pub fn LexicalPath::parts(Self) -> Array[String]
+pub fn LexicalPath::path_kind(Self) -> PathKind
+pub fn LexicalPath::render(Self) -> String
+pub fn LexicalPath::root_name(Self) -> String
+pub fn LexicalPath::to_repr(Self) -> @debug.Repr
+
+pub(all) enum PathKind {
+  RelativePath
+  RootedPath
+  DriveRelativePath(String)
+  DriveAbsolutePath(String)
+  UncPath(String, String)
+} derive(Eq, @debug.Debug)
+pub fn PathKind::equal(Self, Self) -> Bool
+pub fn PathKind::not_equal(Self, Self) -> Bool
+pub fn PathKind::to_repr(Self) -> @debug.Repr
+
+// Type aliases
+
+// Traits
