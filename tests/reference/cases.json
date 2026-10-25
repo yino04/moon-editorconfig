@@ -1,0 +1,276 @@
+{
+  "schema_version": 1,
+  "specification": "EditorConfig 0.17.2",
+  "cases": [
+    {
+      "id": "basic-star",
+      "topic": "A star matches one filename segment.",
+      "files": {
+        ".editorconfig": "root = true\n\n[*]\nindent_style = space\n"
+      },
+      "target": "main.txt",
+      "spec_properties": {"indent_style": "space"}
+    },
+    {
+      "id": "basename-recursive",
+      "topic": "A pattern without a slash matches a basename at any depth.",
+      "files": {
+        ".editorconfig": "root = true\n\n[*.py]\nindent_size = 4\n"
+      },
+      "target": "src/pkg/main.py",
+      "spec_properties": {"indent_size": "4"}
+    },
+    {
+      "id": "slash-anchors-relative-path",
+      "topic": "A pattern containing a slash matches the path relative to its config file.",
+      "files": {
+        ".editorconfig": "root = true\n\n[src/*.py]\nindent_size = 2\n"
+      },
+      "target": "src/main.py",
+      "spec_properties": {"indent_size": "2"}
+    },
+    {
+      "id": "star-does-not-cross-slash",
+      "topic": "A star does not consume a path separator.",
+      "files": {
+        ".editorconfig": "root = true\n\n[src/*.py]\nindent_size = 2\n"
+      },
+      "target": "src/pkg/main.py",
+      "spec_properties": {}
+    },
+    {
+      "id": "question-mark",
+      "topic": "A question mark consumes one non-separator character.",
+      "files": {
+        ".editorconfig": "root = true\n\n[file?.txt]\ncharset = utf-8\n"
+      },
+      "target": "file1.txt",
+      "spec_properties": {"charset": "utf-8"}
+    },
+    {
+      "id": "character-range",
+      "topic": "A character range matches a member of the range.",
+      "files": {
+        ".editorconfig": "root = true\n\n[file[0-9].txt]\nend_of_line = lf\n"
+      },
+      "target": "file7.txt",
+      "spec_properties": {"end_of_line": "lf"}
+    },
+    {
+      "id": "negated-character-class",
+      "topic": "A negated character class rejects listed characters.",
+      "files": {
+        ".editorconfig": "root = true\n\n[file[!0-9].txt]\nend_of_line = crlf\n"
+      },
+      "target": "filex.txt",
+      "spec_properties": {"end_of_line": "crlf"}
+    },
+    {
+      "id": "brace-alternatives",
+      "topic": "Comma-separated brace alternatives select one suffix.",
+      "files": {
+        ".editorconfig": "root = true\n\n[*.{js,ts}]\nindent_size = 2\n"
+      },
+      "target": "main.ts",
+      "spec_properties": {"indent_size": "2"}
+    },
+    {
+      "id": "ascending-numeric-range",
+      "topic": "An ascending numeric brace range includes interior integers.",
+      "files": {
+        ".editorconfig": "root = true\n\n[part{1..3}.txt]\ntrim_trailing_whitespace = true\n"
+      },
+      "target": "part2.txt",
+      "spec_properties": {"trim_trailing_whitespace": "true"}
+    },
+    {
+      "id": "globstar-zero-directories",
+      "topic": "A globstar directory component may consume zero directories.",
+      "files": {
+        ".editorconfig": "root = true\n\n[src/**/main.py]\nindent_size = 2\n"
+      },
+      "target": "src/main.py",
+      "spec_properties": {"indent_size": "2"}
+    },
+    {
+      "id": "globstar-many-directories",
+      "topic": "A globstar directory component may consume many directories.",
+      "files": {
+        ".editorconfig": "root = true\n\n[src/**/main.py]\nindent_size = 2\n"
+      },
+      "target": "src/a/b/main.py",
+      "spec_properties": {"indent_size": "2"}
+    },
+    {
+      "id": "escaped-opening-brace",
+      "topic": "A backslash escapes a glob metacharacter.",
+      "known_ec4j_difference": "ec4j 1.2.0 does not treat an escaped opening brace as a literal in this matcher path.",
+      "files": {
+        ".editorconfig": "root = true\n\n[literal\\{.txt]\ninsert_final_newline = true\n"
+      },
+      "target": "literal{.txt",
+      "spec_properties": {"insert_final_newline": "true"}
+    },
+    {
+      "id": "pair-whitespace",
+      "topic": "Whitespace around a key, equals sign, and value is ignored.",
+      "files": {
+        ".editorconfig": "root = true\n\n[*.md]\n  indent_size   =   2   \n"
+      },
+      "target": "README.md",
+      "spec_properties": {"indent_size": "2"}
+    },
+    {
+      "id": "same-section-last-pair-wins",
+      "topic": "The later pair in one section takes precedence.",
+      "files": {
+        ".editorconfig": "root = true\n\n[*]\nindent_size = 2\nindent_size = 4\n"
+      },
+      "target": "main.txt",
+      "spec_properties": {"indent_size": "4"}
+    },
+    {
+      "id": "later-section-wins",
+      "topic": "A later matching section in one file takes precedence.",
+      "files": {
+        ".editorconfig": "root = true\n\n[*]\nindent_size = 2\n\n[*.txt]\nindent_size = 3\n"
+      },
+      "target": "main.txt",
+      "spec_properties": {"indent_size": "3"}
+    },
+    {
+      "id": "closer-config-wins",
+      "topic": "A configuration file closer to the target takes precedence.",
+      "files": {
+        ".editorconfig": "root = true\n\n[*]\nindent_size = 8\n",
+        "src/.editorconfig": "[*]\nindent_size = 2\n"
+      },
+      "target": "src/main.txt",
+      "spec_properties": {"indent_size": "2"}
+    },
+    {
+      "id": "unset-removes-parent-value",
+      "topic": "The unset value removes a property inherited from a parent file.",
+      "files": {
+        ".editorconfig": "root = true\n\n[*]\nindent_size = 8\n",
+        "src/.editorconfig": "[*.txt]\nindent_size = unset\n"
+      },
+      "target": "src/main.txt",
+      "spec_properties": {}
+    },
+    {
+      "id": "nested-root-stops-search",
+      "topic": "root=true in a nested file prevents inheritance from its parent.",
+      "files": {
+        ".editorconfig": "[*]\nindent_size = 8\n",
+        "project/.editorconfig": "root = true\n\n[*]\nindent_style = tab\n"
+      },
+      "target": "project/src/main.txt",
+      "spec_properties": {"indent_style": "tab"}
+    },
+    {
+      "id": "unknown-property-preserved",
+      "topic": "Unknown properties participate in resolution without rejection.",
+      "files": {
+        ".editorconfig": "root = true\n\n[*]\nacme_mode = careful\n"
+      },
+      "target": "main.txt",
+      "spec_properties": {"acme_mode": "careful"}
+    },
+    {
+      "id": "ascii-case-insensitive-name-and-value",
+      "topic": "Property names and standard values are ASCII case-insensitive.",
+      "files": {
+        ".editorconfig": "ROOT = TRUE\n\n[*]\nINDENT_STYLE = TAB\n"
+      },
+      "target": "main.txt",
+      "spec_properties": {"indent_style": "tab"}
+    },
+    {
+      "id": "utf8-bom",
+      "topic": "A UTF-8 BOM at the beginning of the file is ignored.",
+      "files": {
+        ".editorconfig": "\ufeffroot = true\n\n[*]\ncharset = utf-8\n"
+      },
+      "target": "main.txt",
+      "spec_properties": {"charset": "utf-8"}
+    },
+    {
+      "id": "full-line-comments",
+      "topic": "Hash and semicolon full-line comments are ignored.",
+      "files": {
+        ".editorconfig": "# heading\n; another heading\nroot = true\n\n[*]\n# inside section\ninsert_final_newline = true\n"
+      },
+      "target": "main.txt",
+      "spec_properties": {"insert_final_newline": "true"}
+    },
+    {
+      "id": "inline-semicolon-is-value-text",
+      "topic": "EditorConfig 0.17.2 does not define inline comments; semicolon text remains in the value.",
+      "known_ec4j_difference": "ec4j 1.2.0 implements legacy inline-comment stripping.",
+      "files": {
+        ".editorconfig": "root = true\n\n[*]\nacme_mode = careful ; not a comment in 0.17.2\n"
+      },
+      "target": "main.txt",
+      "spec_properties": {"acme_mode": "careful ; not a comment in 0.17.2"}
+    },
+    {
+      "id": "colon-is-not-a-separator",
+      "topic": "EditorConfig 0.17.2 uses equals as the property separator.",
+      "known_ec4j_difference": "ec4j 1.2.0 also accepts a colon separator.",
+      "files": {
+        ".editorconfig": "root = true\n\n[*]\nacme_mode: careful\n"
+      },
+      "target": "main.txt",
+      "spec_properties": {}
+    },
+    {
+      "id": "descending-numeric-range",
+      "topic": "Only an ascending num1..num2 pair forms the specified integer range.",
+      "known_ec4j_difference": "ec4j 1.2.0 accepts descending numeric ranges.",
+      "files": {
+        ".editorconfig": "root = true\n\n[part{3..1}.txt]\nindent_size = 6\n"
+      },
+      "target": "part2.txt",
+      "spec_properties": {}
+    },
+    {
+      "id": "numeric-range-includes-zero",
+      "topic": "Zero is an integer inside an ascending range that contains it.",
+      "known_ec4j_difference": "ec4j 1.2.0 rejects a numeric-range capture whose text starts with zero, including zero itself.",
+      "files": {
+        ".editorconfig": "root = true\n\n[part{0..2}.txt]\nindent_style = space\n"
+      },
+      "target": "part0.txt",
+      "spec_properties": {"indent_style": "space"}
+    },
+    {
+      "id": "signed-numeric-range",
+      "topic": "Integer ranges may contain negative endpoints and values.",
+      "known_ec4j_difference": "ec4j 1.2.0 compiles numeric-range candidates with an unsigned digit capture.",
+      "files": {
+        ".editorconfig": "root = true\n\n[part{-2..2}.txt]\nindent_style = space\n"
+      },
+      "target": "part-1.txt",
+      "spec_properties": {"indent_style": "space"}
+    },
+    {
+      "id": "empty-value",
+      "topic": "An empty value is a valid value in the live 0.17.2 specification text.",
+      "files": {
+        ".editorconfig": "root = true\n\n[*]\nacme_mode =\n"
+      },
+      "target": "main.txt",
+      "spec_properties": {"acme_mode": ""}
+    },
+    {
+      "id": "spelling-language-preserved",
+      "topic": "The 0.17.2 spelling_language property is resolved like other properties.",
+      "files": {
+        ".editorconfig": "root = true\n\n[*.md]\nspelling_language = en-US\n"
+      },
+      "target": "README.md",
+      "spec_properties": {"spelling_language": "en-US"}
+    }
+  ]
+}

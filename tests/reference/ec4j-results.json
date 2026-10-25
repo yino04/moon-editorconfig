@@ -1,0 +1,629 @@
+{
+  "schema_version": 1,
+  "specification": "EditorConfig 0.17.2",
+  "reference": {
+    "name": "ec4j",
+    "source": "https://github.com/ec4j/ec4j",
+    "source_sha": "4c1a0b00c4dfb8434cfc64d3f5bb8a6ae5b2db5a",
+    "artifact": "core/target/ec4j-core-1.2.0.jar",
+    "artifact_sha256": "a018ae7af5ef5135a2aba72c23de7d7a58485d85f04f2f41fc1d75c0de58d945",
+    "reported_version_stdout": "EditorConfig Java Version 0.12.0-final",
+    "reported_version_stderr": "",
+    "java_version": "openjdk version \"21.0.12.1\" 2026-08-18 LTS\nOpenJDK Runtime Environment Microsoft-14941484 (build 21.0.12.1+1-LTS)\nOpenJDK 64-Bit Server VM Microsoft-14941484 (build 21.0.12.1+1-LTS, mixed mode, sharing)",
+    "build_command": "mvnw.cmd -pl core -am clean verify",
+    "unit_test_summary": {
+      "tests": 68,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1
+    },
+    "query_command": "java -cp <ec4j-jar> org.ec4j.core.cli.Cli <target>",
+    "license": "Apache-2.0; see the upstream LICENSE file"
+  },
+  "moon": null,
+  "counts": {
+    "pending_moon_cli": 29
+  },
+  "ec4j_counts": {
+    "known_ec4j_difference": 5,
+    "spec_agreement": 24
+  },
+  "cases": [
+    {
+      "id": "basic-star",
+      "topic": "A star matches one filename segment.",
+      "spec_properties": {
+        "indent_style": "space"
+      },
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "indent_style=space\n",
+        "stderr": "",
+        "properties": {
+          "indent_style": "space"
+        },
+        "comparison_properties": {
+          "indent_style": "space"
+        }
+      }
+    },
+    {
+      "id": "basename-recursive",
+      "topic": "A pattern without a slash matches a basename at any depth.",
+      "spec_properties": {
+        "indent_size": "4"
+      },
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "indent_size=4\ntab_width=4\n",
+        "stderr": "",
+        "properties": {
+          "indent_size": "4",
+          "tab_width": "4"
+        },
+        "comparison_properties": {
+          "indent_size": "4"
+        }
+      }
+    },
+    {
+      "id": "slash-anchors-relative-path",
+      "topic": "A pattern containing a slash matches the path relative to its config file.",
+      "spec_properties": {
+        "indent_size": "2"
+      },
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "indent_size=2\ntab_width=2\n",
+        "stderr": "",
+        "properties": {
+          "indent_size": "2",
+          "tab_width": "2"
+        },
+        "comparison_properties": {
+          "indent_size": "2"
+        }
+      }
+    },
+    {
+      "id": "star-does-not-cross-slash",
+      "topic": "A star does not consume a path separator.",
+      "spec_properties": {},
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "",
+        "stderr": "",
+        "properties": {},
+        "comparison_properties": {}
+      }
+    },
+    {
+      "id": "question-mark",
+      "topic": "A question mark consumes one non-separator character.",
+      "spec_properties": {
+        "charset": "utf-8"
+      },
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "charset=utf-8\n",
+        "stderr": "",
+        "properties": {
+          "charset": "utf-8"
+        },
+        "comparison_properties": {
+          "charset": "utf-8"
+        }
+      }
+    },
+    {
+      "id": "character-range",
+      "topic": "A character range matches a member of the range.",
+      "spec_properties": {
+        "end_of_line": "lf"
+      },
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "end_of_line=lf\n",
+        "stderr": "",
+        "properties": {
+          "end_of_line": "lf"
+        },
+        "comparison_properties": {
+          "end_of_line": "lf"
+        }
+      }
+    },
+    {
+      "id": "negated-character-class",
+      "topic": "A negated character class rejects listed characters.",
+      "spec_properties": {
+        "end_of_line": "crlf"
+      },
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "end_of_line=crlf\n",
+        "stderr": "",
+        "properties": {
+          "end_of_line": "crlf"
+        },
+        "comparison_properties": {
+          "end_of_line": "crlf"
+        }
+      }
+    },
+    {
+      "id": "brace-alternatives",
+      "topic": "Comma-separated brace alternatives select one suffix.",
+      "spec_properties": {
+        "indent_size": "2"
+      },
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "indent_size=2\ntab_width=2\n",
+        "stderr": "",
+        "properties": {
+          "indent_size": "2",
+          "tab_width": "2"
+        },
+        "comparison_properties": {
+          "indent_size": "2"
+        }
+      }
+    },
+    {
+      "id": "ascending-numeric-range",
+      "topic": "An ascending numeric brace range includes interior integers.",
+      "spec_properties": {
+        "trim_trailing_whitespace": "true"
+      },
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "trim_trailing_whitespace=true\n",
+        "stderr": "",
+        "properties": {
+          "trim_trailing_whitespace": "true"
+        },
+        "comparison_properties": {
+          "trim_trailing_whitespace": "true"
+        }
+      }
+    },
+    {
+      "id": "globstar-zero-directories",
+      "topic": "A globstar directory component may consume zero directories.",
+      "spec_properties": {
+        "indent_size": "2"
+      },
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "indent_size=2\ntab_width=2\n",
+        "stderr": "",
+        "properties": {
+          "indent_size": "2",
+          "tab_width": "2"
+        },
+        "comparison_properties": {
+          "indent_size": "2"
+        }
+      }
+    },
+    {
+      "id": "globstar-many-directories",
+      "topic": "A globstar directory component may consume many directories.",
+      "spec_properties": {
+        "indent_size": "2"
+      },
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "indent_size=2\ntab_width=2\n",
+        "stderr": "",
+        "properties": {
+          "indent_size": "2",
+          "tab_width": "2"
+        },
+        "comparison_properties": {
+          "indent_size": "2"
+        }
+      }
+    },
+    {
+      "id": "escaped-opening-brace",
+      "topic": "A backslash escapes a glob metacharacter.",
+      "spec_properties": {
+        "insert_final_newline": "true"
+      },
+      "ec4j_vs_spec": "difference",
+      "ec4j_classification": "known_ec4j_difference",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "",
+        "stderr": "",
+        "properties": {},
+        "comparison_properties": {}
+      },
+      "known_ec4j_difference": "ec4j 1.2.0 does not treat an escaped opening brace as a literal in this matcher path."
+    },
+    {
+      "id": "pair-whitespace",
+      "topic": "Whitespace around a key, equals sign, and value is ignored.",
+      "spec_properties": {
+        "indent_size": "2"
+      },
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "indent_size=2\ntab_width=2\n",
+        "stderr": "",
+        "properties": {
+          "indent_size": "2",
+          "tab_width": "2"
+        },
+        "comparison_properties": {
+          "indent_size": "2"
+        }
+      }
+    },
+    {
+      "id": "same-section-last-pair-wins",
+      "topic": "The later pair in one section takes precedence.",
+      "spec_properties": {
+        "indent_size": "4"
+      },
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "indent_size=4\ntab_width=4\n",
+        "stderr": "",
+        "properties": {
+          "indent_size": "4",
+          "tab_width": "4"
+        },
+        "comparison_properties": {
+          "indent_size": "4"
+        }
+      }
+    },
+    {
+      "id": "later-section-wins",
+      "topic": "A later matching section in one file takes precedence.",
+      "spec_properties": {
+        "indent_size": "3"
+      },
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "indent_size=3\ntab_width=3\n",
+        "stderr": "",
+        "properties": {
+          "indent_size": "3",
+          "tab_width": "3"
+        },
+        "comparison_properties": {
+          "indent_size": "3"
+        }
+      }
+    },
+    {
+      "id": "closer-config-wins",
+      "topic": "A configuration file closer to the target takes precedence.",
+      "spec_properties": {
+        "indent_size": "2"
+      },
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "indent_size=2\ntab_width=2\n",
+        "stderr": "",
+        "properties": {
+          "indent_size": "2",
+          "tab_width": "2"
+        },
+        "comparison_properties": {
+          "indent_size": "2"
+        }
+      }
+    },
+    {
+      "id": "unset-removes-parent-value",
+      "topic": "The unset value removes a property inherited from a parent file.",
+      "spec_properties": {},
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "indent_size=unset\ntab_width=unset\n",
+        "stderr": "",
+        "properties": {
+          "indent_size": "unset",
+          "tab_width": "unset"
+        },
+        "comparison_properties": {}
+      }
+    },
+    {
+      "id": "nested-root-stops-search",
+      "topic": "root=true in a nested file prevents inheritance from its parent.",
+      "spec_properties": {
+        "indent_style": "tab"
+      },
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "indent_style=tab\nindent_size=tab\n",
+        "stderr": "",
+        "properties": {
+          "indent_size": "tab",
+          "indent_style": "tab"
+        },
+        "comparison_properties": {
+          "indent_style": "tab"
+        }
+      }
+    },
+    {
+      "id": "unknown-property-preserved",
+      "topic": "Unknown properties participate in resolution without rejection.",
+      "spec_properties": {
+        "acme_mode": "careful"
+      },
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "acme_mode=careful\n",
+        "stderr": "",
+        "properties": {
+          "acme_mode": "careful"
+        },
+        "comparison_properties": {
+          "acme_mode": "careful"
+        }
+      }
+    },
+    {
+      "id": "ascii-case-insensitive-name-and-value",
+      "topic": "Property names and standard values are ASCII case-insensitive.",
+      "spec_properties": {
+        "indent_style": "tab"
+      },
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "indent_style=tab\n",
+        "stderr": "",
+        "properties": {
+          "indent_style": "tab"
+        },
+        "comparison_properties": {
+          "indent_style": "tab"
+        }
+      }
+    },
+    {
+      "id": "utf8-bom",
+      "topic": "A UTF-8 BOM at the beginning of the file is ignored.",
+      "spec_properties": {
+        "charset": "utf-8"
+      },
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "charset=utf-8\n",
+        "stderr": "",
+        "properties": {
+          "charset": "utf-8"
+        },
+        "comparison_properties": {
+          "charset": "utf-8"
+        }
+      }
+    },
+    {
+      "id": "full-line-comments",
+      "topic": "Hash and semicolon full-line comments are ignored.",
+      "spec_properties": {
+        "insert_final_newline": "true"
+      },
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "insert_final_newline=true\n",
+        "stderr": "",
+        "properties": {
+          "insert_final_newline": "true"
+        },
+        "comparison_properties": {
+          "insert_final_newline": "true"
+        }
+      }
+    },
+    {
+      "id": "inline-semicolon-is-value-text",
+      "topic": "EditorConfig 0.17.2 does not define inline comments; semicolon text remains in the value.",
+      "spec_properties": {
+        "acme_mode": "careful ; not a comment in 0.17.2"
+      },
+      "ec4j_vs_spec": "difference",
+      "ec4j_classification": "known_ec4j_difference",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "acme_mode=careful\n",
+        "stderr": "",
+        "properties": {
+          "acme_mode": "careful"
+        },
+        "comparison_properties": {
+          "acme_mode": "careful"
+        }
+      },
+      "known_ec4j_difference": "ec4j 1.2.0 implements legacy inline-comment stripping."
+    },
+    {
+      "id": "colon-is-not-a-separator",
+      "topic": "EditorConfig 0.17.2 uses equals as the property separator.",
+      "spec_properties": {},
+      "ec4j_vs_spec": "difference",
+      "ec4j_classification": "known_ec4j_difference",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "acme_mode=careful\n",
+        "stderr": "",
+        "properties": {
+          "acme_mode": "careful"
+        },
+        "comparison_properties": {
+          "acme_mode": "careful"
+        }
+      },
+      "known_ec4j_difference": "ec4j 1.2.0 also accepts a colon separator."
+    },
+    {
+      "id": "descending-numeric-range",
+      "topic": "Only an ascending num1..num2 pair forms the specified integer range.",
+      "spec_properties": {},
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "",
+        "stderr": "",
+        "properties": {},
+        "comparison_properties": {}
+      },
+      "known_ec4j_difference": "ec4j 1.2.0 accepts descending numeric ranges."
+    },
+    {
+      "id": "numeric-range-includes-zero",
+      "topic": "Zero is an integer inside an ascending range that contains it.",
+      "spec_properties": {
+        "indent_style": "space"
+      },
+      "ec4j_vs_spec": "difference",
+      "ec4j_classification": "known_ec4j_difference",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "",
+        "stderr": "",
+        "properties": {},
+        "comparison_properties": {}
+      },
+      "known_ec4j_difference": "ec4j 1.2.0 rejects a numeric-range capture whose text starts with zero, including zero itself."
+    },
+    {
+      "id": "signed-numeric-range",
+      "topic": "Integer ranges may contain negative endpoints and values.",
+      "spec_properties": {
+        "indent_style": "space"
+      },
+      "ec4j_vs_spec": "difference",
+      "ec4j_classification": "known_ec4j_difference",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "",
+        "stderr": "",
+        "properties": {},
+        "comparison_properties": {}
+      },
+      "known_ec4j_difference": "ec4j 1.2.0 compiles numeric-range candidates with an unsigned digit capture."
+    },
+    {
+      "id": "empty-value",
+      "topic": "An empty value is a valid value in the live 0.17.2 specification text.",
+      "spec_properties": {
+        "acme_mode": ""
+      },
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "acme_mode=\n",
+        "stderr": "",
+        "properties": {
+          "acme_mode": ""
+        },
+        "comparison_properties": {
+          "acme_mode": ""
+        }
+      }
+    },
+    {
+      "id": "spelling-language-preserved",
+      "topic": "The 0.17.2 spelling_language property is resolved like other properties.",
+      "spec_properties": {
+        "spelling_language": "en-US"
+      },
+      "ec4j_vs_spec": "agreement",
+      "ec4j_classification": "spec_agreement",
+      "classification": "pending_moon_cli",
+      "ec4j": {
+        "return_code": 0,
+        "stdout": "spelling_language=en-US\n",
+        "stderr": "",
+        "properties": {
+          "spelling_language": "en-US"
+        },
+        "comparison_properties": {
+          "spelling_language": "en-US"
+        }
+      }
+    }
+  ]
+}
