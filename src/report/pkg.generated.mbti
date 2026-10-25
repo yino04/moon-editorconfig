@@ -1,0 +1,41 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "yino04/moon-editorconfig/src/report"
+
+import {
+  "yino04/moon-editorconfig/src/model",
+}
+
+// Values
+pub fn diagnostic_json(@model.Diagnostic) -> String
+
+pub fn diagnostic_text(@model.Diagnostic) -> String
+
+pub fn diagnostics_json(Array[@model.Diagnostic]) -> String
+
+pub fn diagnostics_text(Array[@model.Diagnostic]) -> String
+
+pub fn document_json(@model.EditorConfigDocument) -> String
+
+pub fn effective_property_json(@model.EffectiveProperty) -> String
+
+pub fn position_json(@model.SourcePos) -> String
+
+pub fn property_json(@model.Property) -> String
+
+pub fn section_json(@model.Section) -> String
+
+pub fn settings_json(@model.EffectiveSettings) -> String
+
+pub fn settings_text(@model.EffectiveSettings) -> String
+
+pub fn span_json(@model.SourceSpan) -> String
+
+pub fn trace_event_json(@model.TraceEvent) -> String
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits
