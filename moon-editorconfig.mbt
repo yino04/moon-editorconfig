@@ -28,11 +28,22 @@ pub fn compile_glob(
 }
 
 ///|
+/// Match with diagnostics, preserving resource exhaustion separately from a miss.
+pub fn match_glob(
+  compiled : @glob.CompiledGlob,
+  path : String,
+) -> @glob.GlobMatchResult {
+  @glob.match_glob(compiled, path)
+}
+
+///|
+/// Boolean convenience; use `match_glob` to distinguish a miss from exhaustion.
 pub fn glob_matches(compiled : @glob.CompiledGlob, path : String) -> Bool {
   @glob.glob_matches(compiled, path)
 }
 
 ///|
+/// Boolean convenience; use `compile_glob` and `match_glob` for diagnostics.
 pub fn matches(
   pattern : String,
   path : String,

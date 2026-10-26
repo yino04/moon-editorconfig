@@ -19,6 +19,8 @@ pub fn explain(String, @resolver.MemoryConfigSource, case_sensitivity? : @path.C
 
 pub fn glob_matches(@glob.CompiledGlob, String) -> Bool
 
+pub fn match_glob(@glob.CompiledGlob, String) -> @glob.GlobMatchResult
+
 pub fn matches(String, String, limits? : @model.ResourceLimits) -> Bool
 
 pub fn memory_source(Array[@resolver.ConfigFile]) -> @resolver.MemoryConfigSource

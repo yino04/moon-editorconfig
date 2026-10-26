@@ -1,0 +1,5 @@
+import {
+  "yino04/moon-editorconfig" @editorconfig,
+}
+
+pkgtype(kind: "executable")

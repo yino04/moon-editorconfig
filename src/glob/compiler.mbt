@@ -621,12 +621,13 @@ pub fn compile_glob(
     )
     return { glob: None, diagnostics, }
   }
-  if pattern.length() > limits.max_glob_length {
+  let character_count = pattern.char_length()
+  if character_count > limits.max_glob_length {
     diagnostics.push(
       @model.error_diagnostic(
         "E_GLOB_LENGTH",
-        "glob length \{pattern.length()} exceeds limit \{limits.max_glob_length}",
-        span=glob_span(pattern, 0, pattern.length()),
+        "glob length \{character_count} exceeds limit \{limits.max_glob_length}",
+        span=glob_span(pattern, 0, character_count),
         suggestion="shorten the section glob or raise max_glob_length",
       ),
     )

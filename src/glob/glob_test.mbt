@@ -304,6 +304,17 @@ test "maximum glob length is enforced before parsing" {
 }
 
 ///|
+test "glob length counts Unicode scalar values at the boundary" {
+  let limits = { ..@model.default_limits(), max_glob_length: 2, }
+  let accepted = @glob.compile_glob("😀?", limits~)
+  guard accepted.glob is Some(value) else { fail("two characters must fit") }
+  assert_true(@glob.match_glob(value, "😀x").matched)
+  let rejected = @glob.compile_glob("😀?x", limits~)
+  assert_true(rejected.glob is None)
+  assert_eq(rejected.diagnostics[0].code, "E_GLOB_LENGTH")
+}
+
+///|
 test "maximum brace nesting is enforced" {
   let base = @model.default_limits()
   let limits = { ..base, max_glob_nesting: 1, }
